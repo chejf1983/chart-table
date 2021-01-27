@@ -7,8 +7,7 @@ package chart.spchart.chart;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import nahon.comm.event.Event;
-import nahon.comm.event.EventListener;
+import nahon.comm.event.NEvent;
 import org.jfree.data.Range;
 import org.jfree.data.xy.XYSeries;
 
@@ -26,24 +25,18 @@ public class ChartRangePaint {
         this.parent = parent;
 
         //主数据刷新
-        this.parent.UpdateMainDataEvent.RegeditListener(new EventListener<XYSeries>() {
-            @Override
-            public void recevieEvent(Event<XYSeries> event) {
-                //如果是自动调整界面，当曲线没有被放大的情况下，重新调整上下线
-                if (rangetype == RangeType.AutoRange && !is_zoomout) {
-                    ChangeType(RangeType.AutoRange);
-                }
+        this.parent.UpdateMainDataEvent.RegeditListener((NEvent<XYSeries> event) -> {
+            //如果是自动调整界面，当曲线没有被放大的情况下，重新调整上下线
+            if (rangetype == RangeType.AutoRange && !is_zoomout) {
+                ChangeType(RangeType.AutoRange);
             }
         });
 
         //snapshot刷新
-        this.parent.UpdateSnapShotDataEvent.RegeditListener(new EventListener<XYSeries[]>() {
-            @Override
-            public void recevieEvent(Event<XYSeries[]> event) {
-                //如果是自动调整界面，当曲线没有被放大的情况下，重新调整上下线
-                if (rangetype == RangeType.AutoRange && !is_zoomout) {
-                    ChangeType(RangeType.AutoRange);
-                }
+        this.parent.UpdateSnapShotDataEvent.RegeditListener((NEvent<XYSeries[]> event) -> {
+            //如果是自动调整界面，当曲线没有被放大的情况下，重新调整上下线
+            if (rangetype == RangeType.AutoRange && !is_zoomout) {
+                ChangeType(RangeType.AutoRange);
             }
         });
 

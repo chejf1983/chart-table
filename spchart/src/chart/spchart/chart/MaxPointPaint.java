@@ -7,8 +7,7 @@ package chart.spchart.chart;
 
 import java.awt.Color;
 import java.awt.Font;
-import nahon.comm.event.Event;
-import nahon.comm.event.EventListener;
+import nahon.comm.event.NEvent;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -29,12 +28,9 @@ public class MaxPointPaint {
         this.InitMaxPointRender();
 
         //主数据刷新后，同时刷新峰值的曲线
-        this.parent.UpdateMainDataEvent.RegeditListener(new EventListener<XYSeries>() {
-            @Override
-            public void recevieEvent(Event<XYSeries> event) {
-                if (IsEnableMaxCheck()) {
-                    drawMaxPointLine();
-                }
+        this.parent.UpdateMainDataEvent.RegeditListener((NEvent<XYSeries> event) -> {
+            if (IsEnableMaxCheck()) {
+                drawMaxPointLine();
             }
         });
     }

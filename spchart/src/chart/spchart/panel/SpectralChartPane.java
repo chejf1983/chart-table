@@ -13,9 +13,8 @@ import chart.spchart.chart.ManualRangeDialog;
 import java.awt.image.BufferedImage;
 import java.util.Properties;
 import javax.swing.JPanel;
-import nahon.comm.event.Event;
-import nahon.comm.event.EventCenter;
-import nahon.comm.event.EventListener;
+import nahon.comm.event.NEvent;
+import nahon.comm.event.NEventCenter;
 import chart.data.CSPData;
 import chart.spchart.chart.SpectralChart;
 import org.jfree.data.xy.XYSeries;
@@ -27,7 +26,7 @@ import org.jfree.data.xy.XYSeries;
 public class SpectralChartPane extends javax.swing.JPanel {
 
     //全局颜色显示事件
-    public static EventCenter GlobalColorEvent = new EventCenter();
+    public static NEventCenter GlobalColorEvent = new NEventCenter();
     public static Properties Config = new Properties();
 //    public static JFrame parent = null;
 
@@ -118,20 +117,17 @@ public class SpectralChartPane extends javax.swing.JPanel {
         datachart.freeTextPaint.SetColor(ChartColorConfig.GetTextColor());
         datachart.SetGridColor(ChartColorConfig.GetGridColor());
 
-        GlobalColorEvent.RegeditListener(new EventListener() {
-            @Override
-            public void recevieEvent(Event event) {
-                java.awt.EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        datachart.SetBackgroundColor(ChartColorConfig.GetChartBackGroundColor());
-                        datachart.mainLinePaint.SetColor(ChartColorConfig.GetMainLineColor());
-                        datachart.maxPointPainter.SetPointPaint(ChartColorConfig.GetMainLineColor());
-                        datachart.freeTextPaint.SetColor(ChartColorConfig.GetTextColor());
-                        datachart.SetGridColor(ChartColorConfig.GetGridColor());
-                    }
-                });
-            }
+        GlobalColorEvent.RegeditListener((NEvent event) -> {
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    datachart.SetBackgroundColor(ChartColorConfig.GetChartBackGroundColor());
+                    datachart.mainLinePaint.SetColor(ChartColorConfig.GetMainLineColor());
+                    datachart.maxPointPainter.SetPointPaint(ChartColorConfig.GetMainLineColor());
+                    datachart.freeTextPaint.SetColor(ChartColorConfig.GetTextColor());
+                    datachart.SetGridColor(ChartColorConfig.GetGridColor());
+                }
+            });
         });
     }
 

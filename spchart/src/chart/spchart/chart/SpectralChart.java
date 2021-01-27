@@ -7,7 +7,7 @@ package chart.spchart.chart;
 import java.awt.Paint;
 import java.awt.CardLayout;
 import java.awt.Font;
-import nahon.comm.event.EventCenter;
+import nahon.comm.event.NEventCenter;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -108,7 +108,7 @@ public final class SpectralChart extends javax.swing.JPanel {
     public static int MainLineDataSetIndex = 0;
     public static int MaxLineDataSetIndex = 1;
     public XYSeries mainData = new XYSeries(0);
-    public EventCenter<XYSeries> UpdateMainDataEvent = new EventCenter();
+    public NEventCenter<XYSeries> UpdateMainDataEvent = new NEventCenter();
 
     public void DisplayMainData(XYSeries mainData) {
         this.mainData = mainData;
@@ -131,7 +131,7 @@ public final class SpectralChart extends javax.swing.JPanel {
      */
     public XYSeries[] snapshot = new XYSeries[0];
     public static int SnapShotDataSetIndex = 2;
-    public EventCenter<XYSeries[]> UpdateSnapShotDataEvent = new EventCenter();
+    public NEventCenter<XYSeries[]> UpdateSnapShotDataEvent = new NEventCenter();
 
     private void InitSnapShotDataRender() {
         this.xyplot.setRenderer(SnapShotDataSetIndex, new org.jfree.chart.renderer.xy.XYLineAndShapeRenderer(true, false));
